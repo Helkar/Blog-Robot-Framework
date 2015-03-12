@@ -54,7 +54,7 @@ When a user adds a new post, a comment can be added
     Click in Add Comment
     Blog Post Page Body Should Contain          Stargate Rules!
     Click in Back
-    Blog Body Should Contain         Stargate
+    Blog Body Should Contain         SG-1
     Click in Destroy                 Stargate    SG-1
     Blog Body Should Not Contain     Stargate
     [Teardown]  Close Blog
@@ -74,6 +74,22 @@ When a user adds a new post, it can be edited
     Blog Body Should Contain         arg
     Click in Back
     Click in Destroy                 arg    Moya
-    Blog Body Should Not Contain     arg
+    Blog Body Should Not Contain     Moya
+    [Teardown]  Close Blog
+
+When a user adds a new post, it can be showed
+    Open Blog
+    Click in New Post
+    Type in Title Box   The Witcher
+    Type in Body Box    Geralt
+    Click in Create Post
+    Blog Post Page Body Should Contain     Post was successfully created
+    Click in Back
+    Blog Body Should Contain         The Witcher
+    Click in Show       The Witcher    Geralt
+    Blog Body Should Contain         Geralt
+    Click in Back
+    Click in Destroy                 The Witcher    Geralt
+    Blog Body Should Not Contain     The Witcher
     [Teardown]  Close Blog
 

@@ -13,10 +13,8 @@ class BlogHomePage(Page):
     
     selectors = {
         "new": "link=New Post",
-        "show": "link=Show",
+        "nth show link": "xpath=(//a[@href='/posts/{n}' and text()='Show'])",
         "nth edit link": "xpath=(//a[@href='/posts/{n}/edit'])",
-        #"destroy": "link=Destroy",
-        #"nth destroy link": "xpath=(//a[@href='/posts/{n}'])"#//a[@data-method='delete'])",
         "nth destroy link": "xpath=(//a[@href='/posts/{n}' and text()='Destroy'])",
     }
     
@@ -28,7 +26,6 @@ class BlogHomePage(Page):
     def click_in_destroy(self, title, body):
         post_id = get_post_id(title, body)
         locator = self.resolve_selector("nth destroy link", n=post_id)
-        #locator = self.resolve_selector("destroy")
         self.click_link(locator)
         alert = self._current_browser().switch_to_alert().accept()
         return BlogHomePage()
@@ -39,8 +36,9 @@ class BlogHomePage(Page):
         self.click_link(locator)
         return BlogEditPostPage()
  
-    def click_in_show(self):
-        locator = self.resolve_selector("show")
+    def click_in_show(self, title, body):
+        post_id = get_post_id(title, body)
+        locator = self.resolve_selector("nth show link", n=post_id)
         self.click_link(locator)
         return BlogPostPage()
  
