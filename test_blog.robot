@@ -9,11 +9,7 @@ Resource          resource.txt
 When a user adds a new post, it should be shown and it can be deleted
     [Tags]    Critical
     [Setup]    Open Blog
-    Click in New Post
-    Type in Title Box    ${POST TITLE1}
-    Type in Body Box    ${POST BODY1}
-    Click in Create Post
-    Blog Post Page Body Should Contain    Post was successfully created
+    Create Post    ${POST TITLE1}    ${POST BODY1}
     Click in Back
     Blog Body Should Contain    ${POST TITLE1}
     Click in Destroy    ${POST TITLE1}    ${POST BODY1}
@@ -46,11 +42,7 @@ When a user tries to add a new post, body is mandatory
 
 When a user adds a new post, a comment can be added
     [Setup]    Open Blog
-    Click in New Post
-    Type in Title Box    ${POST TITLE2}
-    Type in Body Box    ${POST BODY2}
-    Click in Create Post
-    Blog Post Page Body Should Contain    Post was successfully created
+    Create Post    ${POST TITLE2}    ${POST BODY2}
     Type in Comment Box    ${POST COMMENT}
     Click in Add Comment
     Blog Post Page Body Should Contain    Posted less than a minute
@@ -63,13 +55,7 @@ When a user adds a new post, a comment can be added
 
 When a user adds a new post, it can be edited
     [Setup]    Open Blog
-    Click in New Post
-    Type in Title Box    ${POST TITLE3}
-    Type in Body Box    ${POST BODY3}
-    Click in Create Post
-    Blog Post Page Body Should Contain    Post was successfully created
-    Click in Back
-    Blog Body Should Contain    ${POST TITLE3}
+    Create Post    ${POST TITLE3}    ${POST BODY3}
     Click in Edit    ${POST TITLE3}    ${POST BODY3}
     Edit Title Box    arg
     Click in Update Post
@@ -81,11 +67,7 @@ When a user adds a new post, it can be edited
 
 When a user adds a new post, it can be showed
     [Setup]    Open Blog
-    Click in New Post
-    Type in Title Box    ${POST TITLE4}
-    Type in Body Box    ${POST BODY4}
-    Click in Create Post
-    Blog Post Page Body Should Contain    Post was successfully created
+    Create Post    ${POST TITLE4}    ${POST BODY4}
     Click in Back
     Blog Body Should Contain    ${POST TITLE4}
     Click in Show    ${POST TITLE4}    ${POST BODY4}
@@ -94,3 +76,12 @@ When a user adds a new post, it can be showed
     Click in Destroy    ${POST TITLE4}    ${POST BODY4}
     Blog Body Should Not Contain    ${POST TITLE4}
     [Teardown]    Close Blog
+
+*** Keywords ***
+Create Post
+    [Arguments]    ${title}    ${body}
+    Click in New Post
+    Type in Title Box    ${title}
+    Type in Body Box    ${body}
+    Click in Create Post
+    Blog Post Page Body Should Contain    Post was successfully created
