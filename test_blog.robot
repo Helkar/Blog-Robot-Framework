@@ -1,8 +1,9 @@
 *** Settings ***
 Documentation     My Ruby on Rails Blog tests
 Library           blog.BlogHomePage
-Library           blog.BlogPostPage
+Library           blog.BlogNewPostPage
 Library           blog.BlogEditPostPage
+Library           blog.BlogShowPostPage
 Resource          resource.txt
 
 *** Test Cases ***
@@ -20,33 +21,32 @@ When a user tries to add a new post, title and body are mandatory
     [Setup]    Open Blog
     Click in New Post
     Click in Create Post
-    Blog Post Page Body Should Contain    Title can't be blank
-    Blog Post Page Body Should Contain    Body can't be blank
-    [Teardown]    Close Blog Post Page
+    Blog New Post Page Body Should Contain    Title can't be blank
+    Blog New Post Page Body Should Contain    Body can't be blank
+    [Teardown]    Close Blog New Post Page
 
 When a user tries to add a new post, title is mandatory
     [Setup]    Open Blog
     Click in New Post
     Type in Body Box    ${POST BODY1}
     Click in Create Post
-    Blog Post Page Body Should Contain    Title can't be blank
-    [Teardown]    Close Blog Post Page
+    Blog New Post Page Body Should Contain    Title can't be blank
+    [Teardown]    Close Blog New Post Page
 
 When a user tries to add a new post, body is mandatory
     [Setup]    Open Blog
     Click in New Post
     Type in Title Box    ${POST TITLE1}
     Click in Create Post
-    Blog Post Page Body Should Contain    Body can't be blank
-    [Teardown]    Close Blog Post Page
+    Blog New Post Page Body Should Contain    Body can't be blank
+    [Teardown]    Close Blog New Post Page
 
 When a user adds a new post, a comment can be added
     [Setup]    Open Blog
     Create Post    ${POST TITLE2}    ${POST BODY2}
     Type in Comment Box    ${POST COMMENT}
     Click in Add Comment
-    Blog Post Page Body Should Contain    Posted less than a minute
-    Blog Post Page Body Should Contain    ${POST COMMENT}
+    Blog Show Post Page Comment Should Contain    ${POST TITLE2}    ${POST BODY2}    ${POST COMMENT}
     Click in Back
     Blog Body Should Contain    ${POST BODY2}
     Click in Destroy    ${POST TITLE2}    ${POST BODY2}
@@ -59,7 +59,7 @@ When a user adds a new post, it can be edited
     Click in Edit    ${POST TITLE3}    ${POST BODY3}
     Edit Title Box    arg
     Click in Update Post
-    Blog Body Should Contain    arg
+    Blog Show Post Page Body Should Contain    arg
     Click in Back
     Click in Destroy    arg    ${POST BODY3}
     Blog Body Should Not Contain    ${POST BODY3}
@@ -84,4 +84,4 @@ Create Post
     Type in Title Box    ${title}
     Type in Body Box    ${body}
     Click in Create Post
-    Blog Post Page Body Should Contain    Post was successfully created
+    Blog Show Post Page Body Should Contain    Post was successfully created
